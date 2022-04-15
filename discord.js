@@ -100,11 +100,11 @@ message.author.send({ embeds: [embed2] }).catch(() => {
 // Send user the captcha when they join the server
 client.on('guildMemberAdd', member => {
     const linkID = pool.createLink(member.id);
-    const embed = new Discord.MessageEmbed()
+    const embed = new MessageEmbed()
         .setTitle('reCAPTCHA Verification')
         .setDescription(`To gain access to this server you must solve a captcha. The link will expire in 15 minutes.\n${config.https ? 'https://' : 'http://'}${config.domain}/verify/${linkID}`)
         .setColor('BLUE');
-    member.send(embed).catch(() => {
+    member.send({ embeds: [embed] }).catch(() => {
         logger.error(`Failed to send captcha to ${member.user.tag}! (Maybe they have DMs turned off?)`);
     });
 });
